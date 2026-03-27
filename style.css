@@ -1,0 +1,380 @@
+/* --------------------------------
+   디자인 시스템 강제 (CSS 변수)
+-------------------------------- */
+:root {
+    /* Pantone DS87-1C (레드) - 강조용 */
+    --color-main-red: #E31837; 
+    /* Pantone DS325-1C (레드 보조) */
+    --color-sub-red: #F04E37;  
+    
+    /* 보조 컬러 시스템 */
+    --color-silver: #8A8D8F;   /* Pantone 877C */
+    --color-gold: #866D4B;     /* Pantone 873C */
+    --color-magenta: #D10074;  /* Pantone DS248-7C */
+    --color-maroon: #8A1538;   /* Pantone DS194-9C */
+    --color-yellow: #FFB81C;   /* Pantone DS13-6C */
+
+    /* 기본 레이아웃 색상 */
+    --color-bg: #FFFFFF;
+    --color-text: #222222;
+    --color-text-muted: #555555;
+    --color-card-bg: #F8F9FA;
+    --color-overlay: rgba(0, 0, 0, 0.85); /* 모달 배경 Dim */
+}
+
+/* --------------------------------
+   폰트 시스템
+-------------------------------- */
+@font-face {
+    font-family: 'SchoolFont';
+    src: url('./assets/fonts/font.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'SchoolFont', 'Pretendard', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: 18px; /* 가독성 최소 18px */
+    line-height: 1.6;
+    overflow: hidden; /* 스크롤 방지, 슬라이드 뷰 고정 */
+}
+
+/* --------------------------------
+   UI 컴포넌트: 프로그레스 바 & 네비게이션
+-------------------------------- */
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 6px;
+    background-color: var(--color-main-red);
+    width: 0%;
+    transition: width 0.4s ease;
+    z-index: 100;
+}
+
+#toc-nav {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    z-index: 90;
+}
+
+#toc-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+#toc-nav li {
+    font-size: 14px;
+    color: var(--color-silver);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 5px;
+}
+
+#toc-nav li:hover,
+#toc-nav li.active {
+    color: var(--color-main-red);
+    font-weight: bold;
+}
+
+/* --------------------------------
+   슬라이드 레이아웃 (100vh)
+-------------------------------- */
+#presentation {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    z-index: 10;
+}
+
+.slide.inactive-prev {
+    transform: translateX(-50px);
+}
+
+.slide.inactive-next {
+    transform: translateX(50px);
+}
+
+/* --------------------------------
+   콘텐츠 정렬 및 타이포그래피
+-------------------------------- */
+.content-center {
+    text-align: center;
+}
+
+.content-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1.main-title {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+.highlight {
+    color: var(--color-main-red);
+}
+
+h2 {
+    font-size: 2.8rem;
+    margin-bottom: 30px;
+    color: var(--color-text);
+    border-left: 8px solid var(--color-main-red);
+    padding-left: 15px;
+}
+
+.subtitle {
+    font-size: 1.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 40px;
+}
+
+.hint {
+    font-size: 1.2rem;
+    color: var(--color-silver);
+}
+
+.section-desc {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: var(--color-text-muted);
+}
+
+/* 목차 리스트 */
+.toc-list {
+    list-style: none;
+    font-size: 1.8rem;
+}
+
+.toc-list li {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+/* --------------------------------
+   그리드 & 카드 시스템
+-------------------------------- */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+.card {
+    background-color: var(--color-card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--color-sub-red);
+}
+
+.card p {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+}
+
+.highlight-border {
+    border: 2px solid var(--color-main-red);
+}
+
+/* 인터랙티브 카드 (세부전공, 커리큘럼) */
+.interactive-card {
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid #E0E0E0;
+}
+
+.interactive-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(227, 24, 55, 0.15); /* Main red shadow */
+    border-color: var(--color-sub-red);
+}
+
+/* 진로 카드 Hover 효과 */
+.career-card {
+    cursor: pointer;
+    text-align: center;
+}
+.career-card:hover {
+    background-color: var(--color-main-red);
+}
+.career-card:hover h3, .career-card:hover p {
+    color: var(--color-bg);
+}
+
+/* --------------------------------
+   QnA 및 아웃트로
+-------------------------------- */
+.qna-title {
+    font-size: 6rem;
+    border: none;
+    padding: 0;
+    color: var(--color-main-red);
+    margin-bottom: 20px;
+}
+.qna-desc {
+    font-size: 2rem;
+    color: var(--color-text-muted);
+}
+.contact-info {
+    margin-top: 50px;
+    font-size: 1.3rem;
+    color: var(--color-text-muted);
+    background: var(--color-card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+/* --------------------------------
+   컨트롤 (버튼 및 페이지 카운터)
+-------------------------------- */
+.controls {
+    position: fixed;
+    bottom: 30px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 90;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.controls button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-text);
+    transition: color 0.2s;
+}
+
+.controls button:hover {
+    color: var(--color-main-red);
+}
+
+#slide-counter {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* --------------------------------
+   모달 인터랙션 (매우 중요)
+   요구사항: 배경 dim, 중앙이동, 2배 확대(scale)
+-------------------------------- */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-overlay);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+#modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 2배 확대 효과를 위해 초기 상태를 0.5로 두고 show일 때 1로 애니메이션 */
+.modal-box {
+    background: var(--color-bg);
+    padding: 60px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    transform: scale(0.5); 
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+#modal-overlay.show .modal-box {
+    transform: scale(1); /* 부드럽게 2배(0.5 -> 1.0) 커지는 애니메이션 */
+}
+
+#modal-close {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-silver);
+    transition: color 0.2s;
+}
+
+#modal-close:hover {
+    color: var(--color-main-red);
+}
+
+#modal-title {
+    font-size: 2.5rem;
+    border: none;
+    padding: 0;
+    margin-bottom: 20px;
+    color: var(--color-main-red);
+}
+
+#modal-body {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: var(--color-text);
+}
+#modal-body ul {
+    margin-top: 15px;
+    margin-left: 20px;
+}
+#modal-body li {
+    margin-bottom: 10px;
+}
