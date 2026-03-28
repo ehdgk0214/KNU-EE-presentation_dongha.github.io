@@ -230,15 +230,29 @@ h2 {
     border-color: var(--color-sub-red);
 }
 
-/* 진로 카드 Hover 효과 */
+/* 진로 카드 기본 스타일 */
 .career-card {
     cursor: pointer;
     text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+/* 마우스를 올렸을 때는 색상 변경 없이 살짝 위로만 뜨게 (클릭 유도) */
 .career-card:hover {
-    background-color: var(--color-main-red);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
-.career-card:hover h3, .career-card:hover p {
+
+/* 💡 추가: 클릭했을 때 적용될 '붉은색' 클래스 */
+.career-card.active-red {
+    background-color: var(--color-main-red);
+    transform: translateY(-5px); 
+    box-shadow: 0 10px 25px rgba(227, 24, 55, 0.2);
+}
+
+/* 클릭된 상태에서는 글자색을 배경색(흰색)으로 변경 */
+.career-card.active-red h3, 
+.career-card.active-red p {
     color: var(--color-bg);
 }
 
