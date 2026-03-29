@@ -500,8 +500,8 @@ h2 {
 .speech-bubble {
     position: absolute;
     bottom: 130%;    /* 캐릭터 이미지 위쪽에 배치 */
-    left: 15px;
-    width: 330px;    /* 말풍선 너비 */
+    left: 50px;
+    width: 350px;    /* 말풍선 너비 */
     background-color: #333; /* 어두운 배경으로 가독성 확보 */
     color: #fff;     /* 흰색 글씨 */
     padding: 20px;
@@ -520,7 +520,7 @@ h2 {
     content: '';
     position: absolute;
     top: 100%;       /* 말풍선 바닥에 붙임 */
-    left: 30px;      /* 왼쪽에서 꼬리 위치 */
+    left: 15px;      /* 왼쪽에서 꼬리 위치 */
     border-width: 10px;
     border-style: solid;
     border-color: #333 transparent transparent transparent; /* 배경색과 동일하게 */
@@ -528,7 +528,7 @@ h2 {
 
 /* 말풍선 텍스트 스타일 */
 .speech-bubble p {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     line-height: 1.5;
     margin: 0;
 }
