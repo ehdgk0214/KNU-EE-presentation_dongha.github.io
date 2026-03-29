@@ -31,7 +31,7 @@ const majorsData = [
         title: "인공지능 및 신호처리",
         img: "./assets/images/aiai.jpg",
         desc: "데이터에 숨겨진 패턴을 분석하고 기계 학습 알고리즘을 최적화하여 스마트 시스템을 구축하는 소프트웨어 중심 전공입니다.",
-        details: ["디지털 신호 처리(<b class='clickable-term' data-img='./assets/images/dsp.png' data-title='[예시] 디지털 신호처' data-caption='아날로그 신호를 잘개 쪼개어 디지털화'>(DSP)</b> )", "머신러닝 및 딥러닝 개론", "음성 및 영상 신호 최적화 알고리즘"]
+        details: ["디지털 신호 처리(<b class='clickable-term' data-img='./assets/images/dsp.png' data-title='[예시] 디지털 신호처' data-caption='아날로그 신호를 잘개 쪼개어 디지털화'>DSP</b> )", "머신러닝 및 딥러닝 개론", "음성 및 영상 신호 최적화 알고리즘"]
     },
     {
         title: "정보통신",
