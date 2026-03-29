@@ -7,7 +7,7 @@ const majorsData = [
        // 이미지 경로 추가 (반드시 실제 파일이 있어야 함)
         img: "./assets/images/major-embedded.jpg",
         desc: "하드웨어 장치를 제어하는 두뇌를 설계합니다. 회로망 해석과 마이크로프로세서 제어 기술을 통해 하드웨어와 소프트웨어를 결합합니다.",
-        details: ["디지털 논리 회로 및 실습", "전자회로 및 Delta-Wye 등 복잡한 회로망 해석", "마이크로컨트롤러(MCU) 프로그래밍", "소형 전자기기 및 시스템 디버깅 역량"]
+        details: ["디지털 논리 회로 및 실습", "전자회로 및 (<b id='dw-link' class='clickable-term'>Delta-Wye 변환</b> 등) 복잡한 회로망 해석", "마이크로컨트롤러(MCU) 프로그래밍", "소형 전자기기 및 시스템 디버깅 역량"]
     },
     {
         title: "반도체 및 디스플레이",
@@ -123,37 +123,51 @@ function renderCards(containerId, dataArray, type) {
 -------------------------------- */
 // script.js 에서 openModal 함수 내부 수정
 
+/* 2. openModal 함수를 찾아 완전히 아래 코드로 대체하세요. */
 function openModal(data) {
     modalTitle.innerText = data.title;
     
-    // 모달 내부를 좌/우로 나누기 위한 래퍼(wrapper) 추가
-    let contentHtml = `<div class="modal-flex-layout">`;
-    
-    // 왼쪽: 텍스트 영역
-    contentHtml += `<div class="modal-text-zone">`;
-    contentHtml += `<p class="modal-desc">${data.desc}</p><ul>`;
+    // 내용 구성 (기존 HTML 구조는 유지하되, 설명 아래 이미지 영역 추가)
+    let contentHtml = `
+        <p class="modal-desc">${data.desc}</p>
+        
+        <div id="dw-example-container" class="hidden-exam">
+            <img src="./assets/images/delta-wye-exam.png" alt="Delta-Wye 변환 예시" class="exam-img">
+            <p class="exam-caption">[예시] 브릿지 회로 해석을 위한 Δ-Y 등가 변환</p>
+        </div>
+
+        <ul>
+    `;
     data.details.forEach(detail => {
         contentHtml += `<li>${detail}</li>`;
     });
-    contentHtml += `</ul></div>`; // 텍스트 영역 닫기
-
-    // 오른쪽: 이미지 영역 (데이터에 이미지가 있을 경우만)
-    if (data.img) {
-        contentHtml += `
-            <div class="modal-image-zone">
-                <img src="${data.img}" alt="${data.title}" class="modal-image">
-            </div>
-        `;
-    }
-
-    contentHtml += `</div>`; // 전체 래퍼 닫기
+    contentHtml += `</ul>`;
     
     modalBody.innerHTML = contentHtml;
 
+    // 모달 표시 로직 (기존 동일)
     modalOverlay.classList.remove('hidden');
     setTimeout(() => {
         modalOverlay.classList.add('show');
+        
+        /* 💡 핵심: 모달이 완전히 뜨고 HTML이 렌더링 된 후에 이벤트를 걸어야 합니다. */
+        attachDeltaWyeEvent(); 
     }, 10);
+}
+
+/* 💡 추가: Delta-Wye 클릭 이벤트를 붙이는 별도 함수 */
+function attachDeltaWyeEvent() {
+    const dwLink = document.getElementById('dw-link');
+    const dwContainer = document.getElementById('dw-example-container');
+
+    // 해당 링크가 현재 모달에 존재할 때만 이벤트 등록
+    if (dwLink && dwContainer) {
+        dwLink.addEventListener('click', (e) => {
+            e.preventDefault(); // 혹시 모를 기본 동작 방지
+            // 'open' 클래스를 토글 (슬라이드 애니메이션 트리거)
+            dwContainer.classList.toggle('open');
+        });
+    }
 }
 
 function closeModal() {
