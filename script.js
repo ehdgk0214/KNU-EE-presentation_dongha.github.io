@@ -7,19 +7,19 @@ const majorsData = [
        // 이미지 경로 추가 (반드시 실제 파일이 있어야 함)
         img: "./assets/images/major-embedded.jpg",
         desc: "하드웨어 장치를 제어하는 두뇌를 설계합니다. 회로망 해석과 마이크로프로세서 제어 기술을 통해 하드웨어와 소프트웨어를 결합합니다.",
-        details: ["디지털 논리 회로 및 실습", "전자회로 및 (<b id='dw-link' class='clickable-term'>Delta-Wye 변환</b> 등) 복잡한 회로망 해석", "마이크로컨트롤러(MCU) 프로그래밍", "소형 전자기기 및 시스템 디버깅 역량"]
+        details: ["디지털 논리 회로 및 실습", "전자회로 및 (<b class='clickable-term' data-img='./assets/images/delta-wye-exam.png' data-title='[예시] Δ-Y 변환' data-caption='브릿지 회로 해석을 위한 Δ-Y 등가 변환'>Delta-Wye </b> 등) 복잡한 회로망 해석", "마이크로컨트롤러(MCU) 프로그래밍", "소형 전자기기 및 시스템 디버깅 역량"]
     },
     {
         title: "반도체 및 디스플레이",
         img: "./assets/images/Semiconductors.jpg",
         desc: "현대 IT 기기의 핵심 부품인 메모리, 시스템 반도체 및 디스플레이 패널의 동작 원리와 제조 공정을 연구합니다.",
-        details: ["물리전자 및 반도체 공학", "집적회로(IC) 설계", "OLED 및 차세대 디스플레이 원리"]
+        details: ["물리전자 및 반도체 공학", "(<b class='clickable-term' data-img='./assets/images/ic_chip.png' data-title='[예시] 집적회로' data-caption=''>집적회로(IC) </b> ) 설계", "OLED 및 차세대 디스플레이 원리"]
     },
     {
         title: "멀티미디어 및 의공학",
         img: "./assets/images/Biomedical.jpg",
         desc: "영상 및 음성 데이터를 처리하는 기술과, 이를 의료 기기에 접목하여 인체 신호를 분석하고 질병을 진단하는 기술을 배웁니다.",
-        details: ["영상 처리 및 컴퓨터 비전", "의료 전자기기 설계", "생체 신호 측정 및 분석"]
+        details: ["영상 처리 및 (<b class='clickable-term' data-img='./assets/images/computer_vision.png' data-title='[예시] 컴퓨터 비전' data-caption='사람이 눈으로 사물을 보고 인지하는 작업을 컴퓨터가 수행하는 모습'>컴퓨터 비전 </b> )", "의료 전자기기 설계", "생체 신호 측정 및 분석"]
     },
     {
         title: "전자파 및 광전자",
@@ -148,33 +148,44 @@ function openModal(data) {
         modalOverlay.classList.add('show');
         
         // 모달이 완전히 뜨고 HTML이 렌더링 된 후에 이벤트를 걸어야 합니다.
-        attachDeltaWyeEvent(); 
+        attachDynamicTermEvents(); 
     }, 10);
 }
 
 /* 3. attachDeltaWyeEvent 함수를 찾아 완전히 아래 코드로 대체하세요. */
-function attachDeltaWyeEvent() {
-    const dwLink = document.getElementById('dw-link');
+function attachDynamicTermEvents() {
+    // 현재 열린 모달 창 내부에 있는 모든 클릭 가능한 용어를 찾습니다.
+    const terms = document.querySelectorAll('#modal-body .clickable-term');
 
-    // 해당 링크가 현재 모달에 존재할 때만 이벤트 등록
-    if (dwLink) {
-        dwLink.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            // 이미지를 슬라이드 다운하는 것이 아니라, 두 번째 모달을 엽니다.
-            openExamModal(); 
+    terms.forEach(term => {
+        term.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // HTML 태그에 적어둔 data-* 값들을 가져옵니다.
+            const imgSrc = term.getAttribute('data-img');
+            const title = term.getAttribute('data-title');
+            const caption = term.getAttribute('data-caption');
+
+            // 두 번째 창을 열 때 이 값들을 전달합니다.
+            openExamModal(imgSrc, title, caption);
         });
-    }
+    });
 }
-/* 💡 추가: 두 번째 모달 (예시 이미지 모달) 열기 함수 */
-function openExamModal() {
-    // 💡 UX 핵심: 두 번째 모달의 바디에 이미지를 **동적으로** 삽입합니다.
-    // HTML에 미리 넣어두면 불필요한 리소스를 차지할 수 있습니다.
+// 기존 openExamModal() 함수를 통째로 지우고 아래 코드로 교체하세요.
+function openExamModal(imgSrc, title, caption) {
+    // 1. 두 번째 창의 제목 변경
+    const examModalTitle = document.querySelector('.exam-modal-title');
+    if (examModalTitle) {
+        examModalTitle.innerText = title;
+    }
+
+    // 2. 전달받은 이미지와 설명을 바디에 동적으로 삽입
     examModalBody.innerHTML = `
-        <img src="./assets/images/delta-wye-exam.png" alt="Delta-Wye 변환 예시" class="exam-img">
-        <p class="exam-caption">[예시] 브릿지 회로 해석을 위한 Δ-Y 등가 변환</p>
+        <img src="${imgSrc}" alt="${title}" class="exam-img">
+        <p class="exam-caption">${caption}</p>
     `;
 
-    // 두 번째 모달 표시 (첫 번째 모달과 동일한 방식)
+    // 3. 창 표시 애니메이션
     examModalOverlay.classList.remove('hidden');
     setTimeout(() => {
         examModalOverlay.classList.add('show');
