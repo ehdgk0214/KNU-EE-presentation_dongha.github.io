@@ -484,7 +484,7 @@ h2 {
 
 /* 캐릭터 이미지 스타일 */
 .char-img {
-    width: 150px;    /* 캐릭터 크기 조절 (원하는 대로 변경 가능) */
+    width: 130px;    /* 캐릭터 크기 조절 (원하는 대로 변경 가능) */
     height: auto;
     transition: transform 0.3s ease;
     /* 약간의 그림자 효과로 입체감 부여 */
@@ -494,7 +494,6 @@ h2 {
 /* 캐릭터 호버 시 살짝 커지는 효과 */
 .char-interaction-container:hover .char-img {
     transform: scale(1.15);
-    transform: translateY(10px);
 }
 
 /* 말풍선 기본 스타일 */
